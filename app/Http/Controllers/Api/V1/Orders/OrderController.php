@@ -78,29 +78,34 @@ class OrderController extends Controller
         return api_response(200, 'success', new OrderResource($order));
     }
 
-//    /**
-//     * Update the specified resource in storage.
-//     *
-//     * @param  \Illuminate\Http\Request $request
-//     * @param  int $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function update(Request $request, $id)
-//    {
-//        $company = $this->companyService->updateCompany($request->all(), $id);
-//        return api_response(200, 'company updated successfully', $company);
-//    }
-//
-//    /**
-//     * Remove the specified resource from storage.
-//     *
-//     * @param  int $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function destroy($id)
-//    {
-//        $this->companyRepository->delete($id);
-//        return api_response(200, 'company deleted successfully', null);
-//    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param OrderRequest $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(OrderRequest $request, $id)
+    {
+        try {
+            $order = $this->orderService->update($request->all(), $id);
+        } catch (\Exception $e) {
+            return api_error($e->getCode(), 'bad request',$e->getMessage());
+        }
+        $order = $order->with('foods')->first();
+        return api_response(200, 'order updated successfully', $order);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->orderRepository->delete($id);
+        return api_response(200, 'order deleted successfully', null);
+    }
 
 }
