@@ -16,7 +16,7 @@ class OrderStatusTableSeeder extends Seeder
             ['title' => 'init'],
             ['title' => 'submitted'],
             ['title' => 'delivered'],
-            ['title' => 'reordered'],
+            ['title' => 'canceled'],
         ];
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Services\Order;
 
+use App\Models\Order;
 use App\Repositories\OrderRepository;
 use App\Services\Restaurant\RestaurantValidator;
 use Illuminate\Support\Facades\App;
@@ -25,12 +26,10 @@ class OrderService
         }
 
         $orderFactory = App::make(OrderFactory::class);
-        $order = $orderFactory->initOrder($input['restaurant_id'], $input['items']);
-
-        return $order;
+        return  $orderFactory->initOrder($input['restaurant_id'], $input['items']);
     }
 
-    public function update($input)
+    public function update($input, $orderId)
     {
         $restaurantValidator = new RestaurantValidator($input['restaurant_id']);
         $orderValidator = new OrderValidator($input['restaurant_id'], $input['items']);
@@ -39,7 +38,9 @@ class OrderService
             throw new \Exception('selected foods or restaurant are not correct', 400);
         }
 
-        #TODO
+        $order = Order::find($orderId)->first();
+        $orderUpdater = App::make(OrderUpdater::class);
+        return $orderUpdater->updateOrder($order, $input['items']);
     }
 
 }

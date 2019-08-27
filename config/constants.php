@@ -14,7 +14,7 @@ return [
        'init' => 1,
        'submitted' => 2,
        'delivered' => 3,
-       'reordered' => 4,
+       'canceled' => 4
     ],
 
     'user_roles' => [

@@ -44,7 +44,7 @@ for installing just do below steps after cloning:
 ```
 
 
-## Running the tests
+## Working With Project
 
 now your project is ready to serve:
 
@@ -54,11 +54,13 @@ now your project is ready to serve:
 there are several api to work with entities,
 it is a road map to work sequentially with them:
 1. login with one of the below users with different roles created with seeders:
+    
     1.1 username: user@gmail.com,  pass: user, role: user
+    
     1.2 username: admin@gmail.com, pass: admin, role: admin 
    
-2. then add your access_token given to you as response to token variable in postman
-3. get a list of restaurants and restaurant food by making 2 api call 
+2. then add your access_token as token variable in postman environment
+3. get a list of restaurants and restaurant's food by making these 2 api call 
 4. store an order with knowledge of data given for restaurant and it's food
 5. make changes to your orders
 

@@ -32,7 +32,7 @@ class OrderValidator
     {
         foreach ($this->foods as $food) {
             if (! $this->checkFood($food)) {
-                throw new \Exception('food id' . $food['food_id'] . 'is not exists', 400);
+                throw new \Exception('food id ' . $food['food_id'] . ' is not exists', 400);
             }
         }
 

@@ -25,6 +25,7 @@ Route::group([
     Route::get('v1/restaurants', 'Api\V1\Restaurants\RestaurantController@index');
     Route::get('v1/foods/restaurant/{id}', 'Api\V1\Foods\FoodController@getRestaurantFoods');
     Route::get('v1/orders/user', 'Api\V1\Orders\OrderController@getUserOrders');
+    Route::put('v1/orders/{order}/change-status', 'Api\V1\Orders\OrderController@changeOrderStatus');
 });
 
 Route::apiResources([

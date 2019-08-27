@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1\Orders;
 
+use App\Http\Requests\ChangeStatusRequest;
 use App\Http\Requests\OrderRequest;
+use App\Http\Requests\UpdateRequest;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
@@ -81,14 +83,14 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param OrderRequest $request
-     * @param  int $id
+     * @param UpdateRequest $request
+     * @param $orderId
      * @return \Illuminate\Http\Response
      */
-    public function update(OrderRequest $request, $id)
+    public function update(UpdateRequest $request, $orderId)
     {
         try {
-            $order = $this->orderService->update($request->all(), $id);
+            $order = $this->orderService->update($request->all(), $orderId);
         } catch (\Exception $e) {
             return api_error($e->getCode(), 'bad request',$e->getMessage());
         }
@@ -106,6 +108,17 @@ class OrderController extends Controller
     {
         $this->orderRepository->delete($id);
         return api_response(200, 'order deleted successfully', null);
+    }
+
+    public function changeOrderStatus(ChangeStatusRequest $request,$orderId)
+    {
+        try {
+            $order = $this->orderService->changeStatus($request->all(), $orderId);
+        } catch (\Exception $e) {
+            return api_error($e->getCode(), 'bad request',$e->getMessage());
+        }
+        $order = $order->with('foods')->first();
+        return api_response(200, 'order updated successfully', $order);
     }
 
 }
