@@ -64,6 +64,14 @@ it is a road map to work sequentially with them:
 4. store an order with knowledge of data given for restaurant and it's food
 5. make changes to your orders
 
+## logic rules of Project
+
+1. user can change orders with init status only
+2. user cannot change order status
+3. admin user can change orders status and get list of all orders
+4. admin can update order of all users
+
+
 
 ## Postman Doc Url
 

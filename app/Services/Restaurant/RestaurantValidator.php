@@ -10,25 +10,20 @@ class RestaurantValidator
 
     /*
     |--------------------------------------------------------------------------
-    | Order Validator
+    | Restaurant Validator
     |--------------------------------------------------------------------------
     |
-    |this class aims to validate restaurant
-    |using some conditions
-    |like open hours status and ...
+    |   this class aims to validate restaurant
+    |   using some conditions
+    |   like open hours status and ...
+    |   #todo
     |
     */
 
-    protected $restaurantId;
-
-    public function __construct($restaurantId)
+    public static function validate($restaurantId) : bool
     {
-        $this->restaurantId = $restaurantId;
-    }
-
-    public function validate() : bool
-    {
-        return (bool) Restaurant::where('id', $this->restaurantId)->count();
+        //some conditions will be add by business logic and new design
+        return (bool) Restaurant::where('id', $restaurantId)->count();
     }
 
 }

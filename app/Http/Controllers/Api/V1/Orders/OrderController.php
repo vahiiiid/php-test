@@ -63,10 +63,14 @@ class OrderController extends Controller
         try {
             $order = $this->orderService->create($request->all());
         } catch (\Exception $e) {
-            return api_error($e->getCode(), 'bad request',$e->getMessage());
+            return api_error($e->getCode(), 'bad request' ,$e->getMessage());
         }
-        $order = $order->with('foods')->first();
-        return api_response(201, 'order created successfully', new OrderResource($order));
+
+        return api_response(
+            201,
+            'order created successfully',
+            new OrderResource($order->with('foods')->first())
+        );
     }
 
     /**
@@ -94,31 +98,40 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             return api_error($e->getCode(), 'bad request',$e->getMessage());
         }
-        $order = $order->with('foods')->first();
-        return api_response(200, 'order updated successfully', $order);
+
+        return api_response(
+            200,
+            'order updated successfully',
+            new OrderResource($order->with('foods')->first())
+        );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param $orderId
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($orderId)
     {
-        $this->orderRepository->delete($id);
+        try {
+            $this->orderService->cancelOrder($orderId);
+        } catch (\Exception $e) {
+            return api_error($e->getCode(), 'bad request',$e->getMessage());
+        }
+
         return api_response(200, 'order deleted successfully', null);
     }
 
     public function changeOrderStatus(ChangeStatusRequest $request,$orderId)
     {
-        try {
-            $order = $this->orderService->changeStatus($request->all(), $orderId);
-        } catch (\Exception $e) {
-            return api_error($e->getCode(), 'bad request',$e->getMessage());
-        }
-        $order = $order->with('foods')->first();
-        return api_response(200, 'order updated successfully', $order);
+        $order = $this->orderService->changeStatus($orderId, $request->get('status'));
+
+        return api_response(
+            200,
+            'order status changed',
+            new OrderResource($order->with('foods')->first())
+        );
     }
 
 }

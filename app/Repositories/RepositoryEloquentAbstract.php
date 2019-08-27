@@ -35,7 +35,7 @@ abstract class RepositoryEloquentAbstract implements RepositoryInterface
     // update record in the database
     public function update(array $data, $id)
     {
-        $record = $this->model->find($id);
+        $record = $this->model->findOrFail((int)$id);
         $record->update($data);
         return $record;
     }

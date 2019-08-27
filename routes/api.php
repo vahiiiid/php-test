@@ -23,9 +23,9 @@ Route::group([
     Route::post('v1/auth/me', 'Api\V1\Auth\AuthController@me');
 
     Route::get('v1/restaurants', 'Api\V1\Restaurants\RestaurantController@index');
-    Route::get('v1/foods/restaurant/{id}', 'Api\V1\Foods\FoodController@getRestaurantFoods');
+    Route::get('v1/foods/restaurants/{id}', 'Api\V1\Foods\FoodController@getRestaurantFoods');
     Route::get('v1/orders/user', 'Api\V1\Orders\OrderController@getUserOrders');
-    Route::put('v1/orders/{order}/change-status', 'Api\V1\Orders\OrderController@changeOrderStatus');
+    Route::patch('v1/orders/{order}/change-status', 'Api\V1\Orders\OrderController@changeOrderStatus');
 });
 
 Route::apiResources([

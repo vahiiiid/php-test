@@ -33,7 +33,7 @@ class Order extends Model
      */
     public function foods()
     {
-        return $this->belongsToMany('App\Models\Food');
+        return $this->belongsToMany('App\Models\Food')->withPivot('count');
     }
 
     /**

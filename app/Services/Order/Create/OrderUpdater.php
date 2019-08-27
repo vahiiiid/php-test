@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Services\Order;
+
+namespace App\Services\Order\Create;
 
 
 use App\Models\Food;
+use App\Models\Order;
 use App\Repositories\OrderRepository;
-use Illuminate\Support\Facades\Auth;
 
-class OrderFactory
+class OrderUpdater
 {
     private $orderRepository;
     private $order;
@@ -18,18 +19,13 @@ class OrderFactory
         $this->orderRepository = $orderRepository;
     }
 
-    public function initOrder($restaurantId, $items)
+    public function updateOrder(Order $order, $items)
     {
+        $this->order = $order;
         $this->makeFoodObjects($items);
-        $this->order = $this->orderRepository->create(
-            [
-                'user_id' => Auth::id(),
-                'restaurant_id' => $restaurantId,
-                'status' => config('constants.order_status.init'),
-                'total_price' => OrderPriceCalculator::calculate($this->foodObjects)
-            ]
-        );
-        $this->storeOrderItems();
+        $this->updateOrderItems();
+        $order->total_price = OrderPriceCalculator::calculate($this->foodObjects);
+        $order->save();
         return $this->order;
     }
 
@@ -43,11 +39,11 @@ class OrderFactory
         }
     }
 
-    public function storeOrderItems()
+    public function updateOrderItems()
     {
+        $this->order->foods()->detach();
         foreach ($this->foodObjects as $foodObject) {
             $foodObject['food']->orders()->save($this->order, ['count' => $foodObject['count']]);
         }
     }
-
 }

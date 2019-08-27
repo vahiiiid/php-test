@@ -16,7 +16,7 @@ class OrderItemsCollection extends ResourceCollection
                     'name' => $foods->name,
                     'price' => $foods->price,
                     'restaurant_id' => $foods->restaurant_id,
-                    'count' => $foods->counts
+                    'count' => $foods->pivot->count
                 ];
             });
     }
