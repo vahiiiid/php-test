@@ -75,7 +75,8 @@ it is a road map to work sequentially with them:
 
 ## Postman Doc Url
 
-* [click to download postman doc](http://vahidvahedi.ir)
+* [click to download postman share link of collection](https://www.getpostman.com/collections/1f559da014424d78a574)
+* [click to see postman document](https://documenter.getpostman.com/view/1243661/SVfNwpRn?version=latest)
 
 
 ## License
