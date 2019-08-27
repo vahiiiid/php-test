@@ -37,7 +37,7 @@ for installing just do below steps after cloning:
 > navigate to php-test directory
 > composer install
 > php -r "file_exists('.env') || copy('.env.example', '.env');"
-> create a mysql database, then add your database access in .env
+> create a mysql database, then add your database access in .env also put project in production mode
 > php artisan key:generate
 > php artisan jwt:secret
 > php artisan migrate --seed
@@ -64,7 +64,7 @@ it is a road map to work sequentially with them:
 4. store an order with knowledge of data given for restaurant and it's food
 5. make changes to your orders
 
-## logic rules of Project
+## Logic Rules of Project
 
 1. user can change orders with init status only
 2. user cannot change order status

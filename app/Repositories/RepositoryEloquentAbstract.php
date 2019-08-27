@@ -21,6 +21,12 @@ abstract class RepositoryEloquentAbstract implements RepositoryInterface
         return $this->model->all();
     }
 
+    // Get all instances of model
+    public function paginate()
+    {
+        return $this->model->paginate();
+    }
+
     // create a new record in the database
     public function create(array $data)
     {

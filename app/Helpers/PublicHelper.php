@@ -17,6 +17,19 @@ if (!function_exists('api_response')) {
     }
 }
 
+if (!function_exists('api_response_paginate')) {
+    function api_response_paginate
+    (
+        $status = 200,
+        $message = '',
+        $data = '',
+        array $headers = array(),
+        $options = 0
+    ) {
+        return response()->json($data, $status, $headers, $options);
+    }
+}
+
 if (!function_exists('api_error')) {
     function api_error
     (
@@ -27,8 +40,8 @@ if (!function_exists('api_error')) {
         $options = 0
     ) {
         $msg = [
-            'message' => __($message),
-            'errors' => [$errors]
+            'errors' => [$errors],
+            'message' => __($message)
         ];
         return response()->json($msg, $status, $headers, $options);
     }

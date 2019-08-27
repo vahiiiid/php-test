@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Repositories\OrderRepository;
 use App\Http\Controllers\Controller;
 use App\Services\Order\OrderService;
+use Illuminate\Support\Facades\Request;
 
 class OrderController extends Controller
 {
@@ -37,7 +38,11 @@ class OrderController extends Controller
     public function index()
     {
         $orders = $this->orderRepository->with('foods')->get();
-        return api_response(200, 'success', new OrderCollection($orders));
+        return api_response_paginate(
+            200,
+            'success',
+            (new OrderCollection($orders))
+                ->paginate(Request::get('per-page') ?? 10));
     }
 
 
@@ -49,7 +54,11 @@ class OrderController extends Controller
     public function getUserOrders()
     {
         $orders = $this->orderRepository->getUserOrders();
-        return api_response(200, 'success', new OrderCollection($orders));
+        return api_response_paginate(
+            200,
+            'success',
+            (new OrderCollection($orders))
+                ->paginate(Request::get('per-page') ?? 10));
     }
 
     /**

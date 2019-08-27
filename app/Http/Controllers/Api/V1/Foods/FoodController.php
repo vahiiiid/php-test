@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Foods;
 use App\Http\Resources\FoodCollection;
 use App\Repositories\FoodRepository;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Request;
 
 class FoodController extends Controller
 {
@@ -29,7 +30,10 @@ class FoodController extends Controller
     public function getRestaurantFoods($restaurantId)
     {
         $foods = $this->foodRepository->getFoodsByRestaurant($restaurantId);
-        return api_response(200, 'success', new FoodCollection($foods));
+        return api_response_paginate(
+            200,
+            'success',
+            (new FoodCollection($foods))->paginate(Request::get('per-page') ?? 10));
     }
 
 }

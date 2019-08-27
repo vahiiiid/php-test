@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Restaurants;
 use App\Http\Resources\RestaurantCollection;
 use App\Repositories\RestaurantRepository;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Request;
 
 class RestaurantController extends Controller
 {
@@ -28,7 +29,11 @@ class RestaurantController extends Controller
     public function index()
     {
         $restaurants = $this->restaurantRepository->all();
-        return api_response(200, 'success', new RestaurantCollection($restaurants));
+        return api_response_paginate(
+            200,
+            'success',
+            (new RestaurantCollection($restaurants))
+                ->paginate(Request::get('per-page') ?? 10));
     }
 
 }
